@@ -40,6 +40,16 @@ export const updateVacancyResponse = async (
     if (dto.min_salary && dto.max_salary && dto.min_salary > dto.max_salary) {
       return res.status(400).json({ error: "Incorrect salary fork" });
     }
+    const validStatuses = [
+      "RESUME_NOT_VIEWED",
+      "RESUME_VIEWED",
+      "INVITATION",
+      "REJECT",
+    ];
+
+    if (dto.status && !validStatuses.includes(dto.status)) {
+      return res.status(400).json({ error: `Incorrect status` });
+    }
     const updatedVacancyResponse = await VacancyResponseModel.findByIdAndUpdate(
       id,
       dto,
