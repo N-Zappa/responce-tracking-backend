@@ -51,6 +51,9 @@ export const updateVacancyResponse = async (
     return res.status(200).json(updatedVacancyResponse);
   } catch (error) {
     logger.error(error);
+    return res
+      .status(500)
+      .json({ error: `Internal Server Error. Details: ${error}` });
   }
 };
 
@@ -69,5 +72,20 @@ export const deleteVacancyResponse = async (
     return res.status(200).json(deletedVacancyResponse);
   } catch (error) {
     logger.error(error);
+    return res
+      .status(500)
+      .json({ error: `Internal Server Error. Details: ${error}` });
+  }
+};
+
+export const getAllVacancyResponses = async (req: Request, res: Response) => {
+  try {
+    const responses = await VacancyResponseModel.find();
+    return res.status(200).json(responses);
+  } catch (error) {
+    logger.error(error);
+    return res
+      .status(500)
+      .json({ error: `Internal Server Error. Details: ${error}` });
   }
 };

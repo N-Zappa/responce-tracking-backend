@@ -2,6 +2,7 @@ import express from "express";
 import {
   createVacancyResponse,
   deleteVacancyResponse,
+  getAllVacancyResponses,
   updateVacancyResponse,
 } from "./vacancy-response.service";
 
@@ -21,4 +22,8 @@ router.patch("/update/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const vacancyId = req.params.id;
   deleteVacancyResponse(req, res, vacancyId);
+});
+
+router.get("/all", (req, res) => {
+  getAllVacancyResponses(req, res);
 });
