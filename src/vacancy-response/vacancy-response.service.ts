@@ -16,6 +16,9 @@ export const createVacancyResponse = async (
       logger.error(error);
       return res.status(400).json({ error: error.message });
     }
+    if (dto.min_salary > dto.max_salary) {
+      return res.status(400).json({ error: "Incorrect salary fork" });
+    }
 
     const vacancyResponse = await VacancyResponseModel.create(dto);
     return res.json(vacancyResponse);
@@ -34,6 +37,9 @@ export const updateVacancyResponse = async (
   dto: UpdateVacancyResponseDTO
 ) => {
   try {
+    if (dto.min_salary && dto.max_salary && dto.min_salary > dto.max_salary) {
+      return res.status(400).json({ error: "Incorrect salary fork" });
+    }
     const updatedVacancyResponse = await VacancyResponseModel.findByIdAndUpdate(
       id,
       dto,
