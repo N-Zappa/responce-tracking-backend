@@ -5,7 +5,7 @@ import { VacancyResponseModel } from "../db/models/varancy-response.model";
 import { VacancyResponseDTO } from "./dto/create-vacancy-response.dto";
 import { UpdateVacancyResponseDTO } from "./dto/update-vacancy-response.dto";
 
-export const create = async (
+export const createVacancyResponse = async (
   req: Request,
   res: Response,
   dto: VacancyResponseDTO
@@ -17,8 +17,8 @@ export const create = async (
       return res.status(400).json({ error: error.message });
     }
 
-    const response = await VacancyResponseModel.create(dto);
-    return res.json({ response: response });
+    const vacancyResponse = await VacancyResponseModel.create(dto);
+    return res.json(vacancyResponse);
   } catch (error) {
     logger.error(error);
     return res
@@ -27,22 +27,40 @@ export const create = async (
   }
 };
 
-export const update = async (
+export const updateVacancyResponse = async (
   req: Request,
   res: Response,
   id: string,
   dto: UpdateVacancyResponseDTO
 ) => {
   try {
-    const updatedVacancy = await VacancyResponseModel.findByIdAndUpdate(
+    const updatedVacancyResponse = await VacancyResponseModel.findByIdAndUpdate(
       id,
       dto,
       { new: true }
     );
-    if (!updatedVacancy) {
+    if (!updatedVacancyResponse) {
       return res.status(404).json({ error: `Vacancy with id ${id} not found` });
     }
-    return res.status(200).json({ updatedVacancy });
+    return res.status(200).json(updatedVacancyResponse);
+  } catch (error) {
+    logger.error(error);
+  }
+};
+
+export const deleteVacancyResponse = async (
+  req: Request,
+  res: Response,
+  id: string
+) => {
+  try {
+    const deletedVacancyResponse = await VacancyResponseModel.findByIdAndDelete(
+      id
+    );
+    if (!deletedVacancyResponse) {
+      return res.status(404).json({ error: `Vacancy with id ${id} not found` });
+    }
+    return res.status(200).json(deletedVacancyResponse);
   } catch (error) {
     logger.error(error);
   }
