@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "nodemon src/app.ts"
+    "dev": "nodemon src/app.ts",
+    "prod": "npx tsc && node dist/app.js"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
