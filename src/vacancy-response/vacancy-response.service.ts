@@ -16,7 +16,8 @@ export const createVacancyResponse = async (
       logger.error(error);
       return res.status(400).json({ error: error.message });
     }
-    if (dto.min_salary > dto.max_salary) {
+
+    if (Number(dto.min_salary) > Number(dto.max_salary)) {
       return res.status(400).json({ error: "Incorrect salary fork" });
     }
 
@@ -37,7 +38,11 @@ export const updateVacancyResponse = async (
   dto: UpdateVacancyResponseDTO
 ) => {
   try {
-    if (dto.min_salary && dto.max_salary && dto.min_salary > dto.max_salary) {
+    if (
+      dto.min_salary &&
+      dto.max_salary &&
+      Number(dto.min_salary) > Number(dto.max_salary)
+    ) {
       return res.status(400).json({ error: "Incorrect salary fork" });
     }
     const validStatuses = [
